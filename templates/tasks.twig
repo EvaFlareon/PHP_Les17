@@ -26,30 +26,26 @@
 				<td>Дата добавления</td>
 			</tr>
 
-			<!-- <?php while ($data = mysqli_fetch_array($res)) { ?> -->
 			{% for data in mysqli_fetch_array(main_table) %}
 			<tr>
-				<td><!-- <?php echo $user['login']; ?> -->{{ user }}</td>
-				<td><!-- <?php echo $data['login']; ?> -->{{ data['login'] }}</td>
+				<td>{{ user }}</td>
+				<td>{{ data['login'] }}</td>
 				<td>
 					<select name="user_rep">
 						<option></option>
-						<!-- <?php for ($i = 0; $i < count($users_login); $i++) { ?> -->
 						{% for el in users %}
-						<option><!-- <?php echo $users_login[$i]; ?> -->{{ el }}</option>
-						<!-- <?php } ?> -->
+						<option>{{ el }}</option>
 						{% endfor %}
 					</select>
 					<br>
-					<input type="submit" name="<!-- <?= 'r'.$data['user_id']; ?> -->{{ 'r'.data['user_id'] }}" value="Перенаправить задачу">
+					<input type="submit" name="{{ 'r'.data['user_id'] }}" value="Перенаправить задачу">
 				</td>
-				<td><!-- <?php echo $data['description']; ?> -->{{ data['description'] }}</td>
-				<td><!-- <?php echo $data['is_done']; ?> -->{{ data['is_done'] }}</td>
-				<td><!-- <?php echo $data['date_added']; ?> -->{{ data['date_added'] }}</td>
-				<td style="border: none"><input type="submit" name="<!-- <?= 'c'.$data[0]; ?> -->{{ 'c'.data['user_id'] }}" value="Выполнить"></td>
-				<td style="border: none"><input type="submit" name="<!-- <?= 'd'.$data[0]; ?> -->{{ 'd'.data['user_id'] }}" value="Удалить"></td>
+				<td>{{ data['description'] }}</td>
+				<td>{{ data['is_done'] }}</td>
+				<td>{{ data['date_added'] }}</td>
+				<td style="border: none"><input type="submit" name="{{ 'c'.data['user_id'] }}" value="Выполнить"></td>
+				<td style="border: none"><input type="submit" name="{{ 'd'.data['user_id'] }}" value="Удалить"></td>
 			</tr>
-			<!-- <?php } ?> -->
 			{% endfor %}
 		</table>
 	</form>
@@ -65,18 +61,16 @@
 				<td>Дата добавления</td>
 			</tr>
 
-			<!-- <?php while ($data = mysqli_fetch_array($res_rep)) { ?> -->
 			{% for data in mysqli_fetch_array(table) %}
 			<tr>
-				<td><!-- <?php echo $data['login']; ?> -->{{ data['login'] }}</td>
-				<td><!-- <?php echo $user['login']; ?> -->{{ user }}</td>
-				<td><!-- <?php echo $data['description']; ?> -->{{ data['description'] }}</td>
-				<td><!-- <?php echo $data['is_done']; ?> -->{{ data['is_done'] }}</td>
-				<td><!-- <?php echo $data['date_added']; ?> -->{{ data['date_added'] }}</td>
-				<td style="border: none"><input type="submit" name="<!-- <?= 'c'.$data[0]; ?> -->{{ 'c'.data[0] }}" value="Выполнить"></td>
-				<td style="border: none"><input type="submit" name="<!-- <?= 'd'.$data[0]; ?> -->{{ 'd'.data[0] }}" value="Удалить"></td>
+				<td>{{ data['login'] }}</td>
+				<td>{{ user }}</td>
+				<td>{{ data['description'] }}</td>
+				<td>{{ data['is_done'] }}</td>
+				<td>{{ data['date_added'] }}</td>
+				<td style="border: none"><input type="submit" name="{{ 'c'.data[0] }}" value="Выполнить"></td>
+				<td style="border: none"><input type="submit" name="{{ 'd'.data[0] }}" value="Удалить"></td>
 			</tr>
-			<!-- <?php } ?> -->
 			{% endfor %}
 		</table>
 	</form>
