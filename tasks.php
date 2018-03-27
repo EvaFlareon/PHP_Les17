@@ -37,20 +37,17 @@ $sql_rep = "select * from task left join user on user.id=task.user_id where task
 if (!empty($_POST)) {
 	if (isset($_POST['add']) && $_POST['adding'] !== '') {
 		mysqli_query($connect, "insert into `task`(`user_id`, `assigned_user_id`, `description`) values ('".$user['id']."', '".$user['id']."', '".$_POST['adding']."')");
-		//header('Location: tasks.php');
 	}
 
 	foreach ($_POST as $key => $value) {
 		if ($key[0] === 'c' && $value != '') {
 			$i = substr($key, 1);
 			mysqli_query($connect, "update task set is_done = 1 where id = ".$i);
-			//header('Location: ./templates/tasks.twig');
 		}
 
 		if ($key[0] === 'd' && $value != '') {
 			$i = substr($key, 1);
 			mysqli_query($connect, "delete from task where id = ".$i);
-			//header('Location: ./templates/tasks.twig');
 		}
 
 		if ($key[0] === 'r' && $value != '') {
@@ -61,7 +58,6 @@ if (!empty($_POST)) {
 				}
 			}
 			mysqli_query($connect, "update task set assigned_user_id = ".$users_id[$new_user]." where id = ".$i);
-			//header('Location: ./templates/tasks.twig');
 		}
 	}
 }
