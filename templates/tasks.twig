@@ -1,0 +1,89 @@
+<html>
+<head>
+	<title>Список задач</title>
+	<style>
+		table {
+			margin-top: 5px;
+			border-collapse: collapse;
+		}
+		th, td {
+			padding: 5px;
+			border: 1px solid grey;
+		}
+	</style>
+</head>
+<body>
+	<h1>Здравствуйте {{ user }}. Список дел на сегодня</h1>
+	<form action="../tasks.php" method="post">
+		<table>
+			<input type="text" name="adding"><input type="submit" name="add" value="Добавить">			
+			<tr style="background-color: #eeeeee">
+				<td>Автор</td>
+				<td>Ответственный</td>
+				<td>Закрепить задачу за пользователем</td>
+				<td>Описание задачи</td>
+				<td>Статус</td>
+				<td>Дата добавления</td>
+			</tr>
+
+			<!-- <?php while ($data = mysqli_fetch_array($res)) { ?> -->
+			{% for data in mysqli_fetch_array(main_table) %}
+			<tr>
+				<td><!-- <?php echo $user['login']; ?> -->{{ user }}</td>
+				<td><!-- <?php echo $data['login']; ?> -->{{ data['login'] }}</td>
+				<td>
+					<select name="user_rep">
+						<option></option>
+						<!-- <?php for ($i = 0; $i < count($users_login); $i++) { ?> -->
+						{% for el in users %}
+						<option><!-- <?php echo $users_login[$i]; ?> -->{{ el }}</option>
+						<!-- <?php } ?> -->
+						{% endfor %}
+					</select>
+					<br>
+					<input type="submit" name="<!-- <?= 'r'.$data['user_id']; ?> -->{{ 'r'.data['user_id'] }}" value="Перенаправить задачу">
+				</td>
+				<td><!-- <?php echo $data['description']; ?> -->{{ data['description'] }}</td>
+				<td><!-- <?php echo $data['is_done']; ?> -->{{ data['is_done'] }}</td>
+				<td><!-- <?php echo $data['date_added']; ?> -->{{ data['date_added'] }}</td>
+				<td style="border: none"><input type="submit" name="<!-- <?= 'c'.$data[0]; ?> -->{{ 'c'.data['user_id'] }}" value="Выполнить"></td>
+				<td style="border: none"><input type="submit" name="<!-- <?= 'd'.$data[0]; ?> -->{{ 'd'.data['user_id'] }}" value="Удалить"></td>
+			</tr>
+			<!-- <?php } ?> -->
+			{% endfor %}
+		</table>
+	</form>
+
+	<p>Так же посмотрите, что от Вас требуют другие люди</p>
+	<form action="../tasks.php" method="post">
+		<table>
+			<tr style="background-color: #eeeeee">
+				<td>Автор</td>
+				<td>Ответственный</td>
+				<td>Описание задачи</td>
+				<td>Статус</td>
+				<td>Дата добавления</td>
+			</tr>
+
+			<!-- <?php while ($data = mysqli_fetch_array($res_rep)) { ?> -->
+			{% for data in mysqli_fetch_array(table) %}
+			<tr>
+				<td><!-- <?php echo $data['login']; ?> -->{{ data['login'] }}</td>
+				<td><!-- <?php echo $user['login']; ?> -->{{ user }}</td>
+				<td><!-- <?php echo $data['description']; ?> -->{{ data['description'] }}</td>
+				<td><!-- <?php echo $data['is_done']; ?> -->{{ data['is_done'] }}</td>
+				<td><!-- <?php echo $data['date_added']; ?> -->{{ data['date_added'] }}</td>
+				<td style="border: none"><input type="submit" name="<!-- <?= 'c'.$data[0]; ?> -->{{ 'c'.data[0] }}" value="Выполнить"></td>
+				<td style="border: none"><input type="submit" name="<!-- <?= 'd'.$data[0]; ?> -->{{ 'd'.data[0] }}" value="Удалить"></td>
+			</tr>
+			<!-- <?php } ?> -->
+			{% endfor %}
+		</table>
+	</form>
+
+	<br>
+	<form action="../tasks.php" method="post">
+		<input type="submit" name="exit" value="Выход">
+	</form>
+</body>
+</html>
