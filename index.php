@@ -42,7 +42,6 @@ if (!empty($_POST)) {
         }
         
         if (isset($err)) {
-            // echo $err;
             echo $twig->render('index.twig', ['err' => $err]);
         } else {
             mysqli_query($connect, "insert into `user`(`login`, `password`) values ('".$_POST['login']."','".$_POST['password']."')");
