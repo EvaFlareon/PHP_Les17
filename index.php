@@ -15,13 +15,21 @@ if (!empty($_SESSION['user'])) {
     header('Location: ./templates/tasks.twig');
 }
 
-$connect = include 'config.php';
-$sql = "select * from user";
+$config = include 'config.php';
+
+include 'connect.php';
+
+$db = DataBase::connect(
+    $config['mysql']['host'],
+    $config['mysql']['dbname'],
+    $config['mysql']['user'],
+    $config['mysql']['pass']
+);
 
 if (!empty($_POST)) {
     if (isset($_POST['input'])) {
-        $res = mysqli_query($connect, $sql);
-        while ($data = mysqli_fetch_array($res)) {
+        $res = DataBase::show($db);
+        while ($data = $res->fetch()) {
             if ($data['login'] === $_POST['login'] && $data['password'] === $_POST['password']) {
                 $_SESSION['user'] = $data['id'];
                 header('Location: ./templates/tasks.twig');
@@ -30,8 +38,8 @@ if (!empty($_POST)) {
     }
 
     if (isset($_POST['reg'])) {
-        $res = mysqli_query($connect, $sql);
-        while ($data = mysqli_fetch_array($res)) {
+        $res = DataBase::show($db);
+        while ($data = $res->fetch()) {
             if ($data['login'] === $_POST['login']) {
                 $err = 'Пользователь с таким логином уже существует';
                 break;
@@ -44,8 +52,8 @@ if (!empty($_POST)) {
         if (isset($err)) {
             echo $twig->render('index.twig', ['err' => $err]);
         } else {
-            mysqli_query($connect, "insert into `user`(`login`, `password`) values ('".$_POST['login']."','".$_POST['password']."')");
-            echo 'Вы успешно зарегистрированы. Войдите под своим логином и паролем';
+            DataBase::insert($db, $_POST['login'], $_POST['password']);
+            echo $twig->render('index.twig', ['err' => 'Вы успешно зарегистрированы. Войдите под своим логином и паролем']);
         }
     }
 }

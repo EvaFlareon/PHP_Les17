@@ -1,5 +1,12 @@
 <?php 
 
-return mysqli_connect("localhost", "root", "", "netology");
+return [
+	'mysql' => [
+		'host' => 'localhost',
+		'dbname' => 'netology',
+		'user' => 'root',
+		'pass' => ''
+	]
+];
 
 ?>
